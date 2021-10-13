@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Cell from "./Cell";
 import "./Board.css";
+import { makeBoard, determineOnOff } from "./helper";
 
 /** Game board of Lights out.
  *
@@ -31,10 +32,15 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   const [board, setBoard] = useState(createBoard());
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
-  function createBoard() {
-    let initialBoard = [];
+  function createBoard(nrows, ncols, chanceLightStartsOn) {
+    let initialBoard = makeBoard(ncols, nrows);
+
     // TODO: create array-of-arrays of true/false values
-    return initialBoard;
+    return initialBoard.map(
+      row => row.map(
+        cell => determineOnOff(chanceLightStartsOn)
+      )
+    );
   }
 
   function hasWon() {
